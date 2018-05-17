@@ -21,9 +21,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProgressFragment extends Fragment{
 
-    TextView contentView;
+    TextView contentView, txt;
     String contentText = null;
-    WebView webView;
+    Fragment frag = null;
+
 
 
     @Override
@@ -38,15 +39,16 @@ public class ProgressFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
         contentView = (TextView) view.findViewById(R.id.content);
-        webView = (WebView) view.findViewById(R.id.webView);
+        txt = (TextView) view.findViewById(R.id.dataView);
 
         // если данные ранее были загружены
         if(contentText!=null){
             contentView.setText(contentText);
-            webView.loadData(contentText, "text/html; charset=utf-8", "utf-8");
+           // webView.loadData(contentText, "text/html; charset=utf-8", "utf-8");
         }
 
         Button btnFetch = (Button)view.findViewById(R.id.downloadBtn);
+
         btnFetch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +81,12 @@ public class ProgressFragment extends Fragment{
 
             contentText=content;
             contentView.setText(content);
-            webView.loadData(content, "text/html; charset=utf-8", "utf-8");
+           /// contentView.setVisibility(View.INVISIBLE);
+           /// contentView.setText("Данные загружены, но не обработаны....");
+
+            setContent(content);
+
+            ///webView.loadData(content, "text/html; charset=utf-8", "utf-8");
             Toast.makeText(getActivity(), "Данные загружены", Toast.LENGTH_SHORT)
                     .show();
         }
@@ -108,5 +115,11 @@ public class ProgressFragment extends Fragment{
             }
         }
     }
+
+    public void setContent(String content){
+
+            txt.setText(content);
+    }
+
 
 }
