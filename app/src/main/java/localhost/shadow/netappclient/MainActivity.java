@@ -3,22 +3,22 @@ package localhost.shadow.netappclient;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ListAdapter;
+import android.view.View;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
-    ListView lv;
+    View lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
 
     public void setAdapter(ArrayList<HashMap<String,String>> map){

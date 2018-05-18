@@ -102,7 +102,7 @@ public class ProgressFragment extends Fragment{
             contentText=content;
           //  contentView.setText(content);
            /// contentView.setVisibility(View.INVISIBLE);
-            //contentView.setText("Данные загружены, но не обработаны....");
+            contentView.setText("Данные загружены, но не обработаны....");
 
             setContent(content);
 
