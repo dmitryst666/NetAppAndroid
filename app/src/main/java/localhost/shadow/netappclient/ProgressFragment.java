@@ -1,22 +1,32 @@
 package localhost.shadow.netappclient;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+import android.widget.SimpleAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,16 +36,19 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProgressFragment extends Fragment{
 
-    TextView contentView, txt;
+    TextView contentView;
+    ListView lv;
     String contentText = null;
     Fragment frag = null;
-
+    ArrayList<HashMap<String, String>> newItemlist = new ArrayList<HashMap<String, String>>();
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        newItemlist = new ArrayList<HashMap<String, String>>();
     }
 
 
@@ -44,13 +57,15 @@ public class ProgressFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
         contentView = (TextView) view.findViewById(R.id.content);
-        txt = (TextView) view.findViewById(R.id.dataView);
+        lv = (ListView) view.findViewById(R.id.dataView);
 
         // если данные ранее были загружены
         if(contentText!=null){
             contentView.setText(contentText);
            // webView.loadData(contentText, "text/html; charset=utf-8", "utf-8");
         }
+
+
 
         Button btnFetch = (Button)view.findViewById(R.id.downloadBtn);
 
@@ -85,9 +100,9 @@ public class ProgressFragment extends Fragment{
         protected void onPostExecute(String content) {
 
             contentText=content;
-           // contentView.setText(content);
+          //  contentView.setText(content);
            /// contentView.setVisibility(View.INVISIBLE);
-            contentView.setText("Данные загружены, но не обработаны....");
+            //contentView.setText("Данные загружены, но не обработаны....");
 
             setContent(content);
 
@@ -103,7 +118,7 @@ public class ProgressFragment extends Fragment{
             //    HttpsURLConnection c=(HttpsURLConnection)url.openConnection();
                 HttpURLConnection c=(HttpURLConnection)url.openConnection();
                 c.setRequestMethod("GET");
-                c.setReadTimeout(10000);
+                c.setReadTimeout(1000);
                 c.connect();
                 reader= new BufferedReader(new InputStreamReader(c.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -133,15 +148,24 @@ public class ProgressFragment extends Fragment{
                  Log.d("JSON name=", nameStr);
                  String accStr = obj.getString("account");
                  Log.d("JSON acc=", accStr);
+                 String addrStr = obj.getString("address");
+                 Log.d("JSON addr=", addrStr);
+
+                 HashMap<String, String> map = new HashMap<String, String>();
+                 map.put("name", nameStr);
+                 map.put("account",accStr);
+                 map.put("address", addrStr);
+                 newItemlist.add(map);
                     }
 
                 } catch (JSONException ex) {
             Log.e("JSONException", ex.toString());
-                        }
+            }
 
 
-           // txt.setText(content);
+
     }
 
 
 }
+

@@ -8,27 +8,16 @@
         android:layout_height="wrap_content"
         android:text="Загрузка" />
 
-    <ScrollView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
 
         <TextView android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </ScrollView>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/dataView"
-            android:layout_marginTop="10dp"
-             />
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/dataView" >
 
-    </ScrollView>
+</ListView>
 
 </LinearLayout>
