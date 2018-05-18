@@ -10,12 +10,17 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -80,9 +85,9 @@ public class ProgressFragment extends Fragment{
         protected void onPostExecute(String content) {
 
             contentText=content;
-            contentView.setText(content);
+           // contentView.setText(content);
            /// contentView.setVisibility(View.INVISIBLE);
-           /// contentView.setText("Данные загружены, но не обработаны....");
+            contentView.setText("Данные загружены, но не обработаны....");
 
             setContent(content);
 
@@ -118,7 +123,24 @@ public class ProgressFragment extends Fragment{
 
     public void setContent(String content){
 
-            txt.setText(content);
+        JSONArray json = null;
+        try {
+             json = new JSONArray(content);
+
+             for (int i=0; i<json.length(); i++){
+                 JSONObject obj = json.getJSONObject(i);
+                 String nameStr = obj.getString("name");
+                 Log.d("JSON name=", nameStr);
+                 String accStr = obj.getString("account");
+                 Log.d("JSON acc=", accStr);
+                    }
+
+                } catch (JSONException ex) {
+            Log.e("JSONException", ex.toString());
+                        }
+
+
+           // txt.setText(content);
     }
 
 

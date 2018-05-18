@@ -13,11 +13,3 @@ public class MainActivity extends Activity {
     }
 
 }
-
-//class Filler {
-//
-//    public void setFill(String data){
-//        Log.d("TEST", data);
-//    }
-
-//}
